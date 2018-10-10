@@ -1,0 +1,17 @@
+# game loop
+loop do
+    shoot = 0
+    high = 0
+    8.times do |i|
+        mountain_h = gets.to_i
+        if mountain_h > high
+            high = mountain_h
+            shoot = i
+        end
+    end
+    
+    # Write an action using puts
+    # To debug: STDERR.puts "Debug messages..."
+    
+    puts shoot # The index of the mountain to fire on.
+end
