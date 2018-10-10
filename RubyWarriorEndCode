@@ -1,0 +1,58 @@
+# for https://www.bloc.io/ruby-warrior/
+
+class Player
+  def play_turn(warrior)
+    # looking
+    @looksForward = warrior.look
+    if @looksForward[0].enemy?
+      @shoot = 1
+      warrior.shoot!
+    end
+      if @looksForward[1].enemy?
+        @shoot = 1
+      warrior.shoot!
+    end
+      if @looksForward[2].enemy?
+        @shoot = 1
+      warrior.shoot!
+    end
+    # Healing decision
+    if warrior.feel.empty? == true and warrior.health < 20 and @charge != 1 and @shoot != 1
+      # If he is getting hit by an archer then walk back until out of range
+      @healed = 1
+      @charge = 0
+         if warrior.health < @health and @charge != 1
+          warrior.walk!:backward
+          else
+          # If he is not getting hit by an archer then heal up until fully healed. Then charge
+          warrior.rest!
+          if warrior.health >= 18 
+            @charge = 1
+          end
+      end
+    end
+    # forward
+    # check for captives
+    if warrior.feel.empty? == false and warrior.feel.captive? and @healed != 1 and @shoot != 1
+        warrior.rescue!
+    end
+    #check for enemy, if so attack
+    if warrior.feel.empty? == false and warrior.feel.enemy? and @healed != 1 and @shoot != 1
+        warrior.attack!
+    end
+    #if there is nothing there and charge is on, then walk forward
+    if warrior.feel.empty? == true and @charge == 1 and @healed != 1 and @shoot != 1
+      warrior.walk!
+    end
+    # If there is nothing there and charge is off and fully healed, walk forward
+    if warrior.feel.empty? == true and warrior.health == 20 and @charge !=1 and @healed != 1 and @shoot != 1
+      warrior.walk!
+    end
+    if warrior.feel.wall? == true
+      warrior.pivot!
+    end
+    @health = warrior.health
+    @healed = 0
+    @shoot = 0
+    end
+end
