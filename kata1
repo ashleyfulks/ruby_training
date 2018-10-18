@@ -1,0 +1,48 @@
+:begin
+from http://www.codewars.com/kata/5901f361927288d961000013/solutions/ruby
+Codewars 
+
+My Answer:
+
+def product(arr)
+  #code
+  # variable for returning the product has to be 1 cause 0 would cause 0 result
+  product = 1
+  # initialize loop variable
+  i = 0
+  # handle some zero or nil values and if true, skip over the product loop
+  if arr.singleton_class == NilClass || arr[0] == nil then product = nil else 
+  # loop through the array multiplying product *= value[i]
+while i < arr.length
+    product *= arr[i]
+    i += 1
+    end
+  end
+  # All done! Return the product
+  return product;
+end
+
+Optimized answers
+:end
+
+def product(arr)
+  arr&.reduce(:*)
+end
+
+def product(arr)
+  arr.reduce(:*) rescue nil
+end
+
+def product(arr)
+  arr.reduce(:*) if arr.is_a? Array
+end
+
+def product(arr)
+  return if arr.nil?
+  arr.inject(:*)
+end
+
+def product(arr)
+  arr&&arr.reduce(:*)
+end
+
